@@ -16,7 +16,7 @@ uploaded_excel = st.file_uploader("Upload Excel File", type=["xlsx"])
 uploaded_image = st.file_uploader("Upload Image Template", type=["png", "jpg", "jpeg"])
 
 
-def get_system_font(font_size=35):
+def get_system_font(font_size=20):
     font_paths = [
         "times.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
