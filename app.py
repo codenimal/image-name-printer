@@ -81,7 +81,7 @@ if st.button("Generate Images"):
         available_width = line_end_x - line_start_x
         
         
-        max_font_size = 35
+        max_font_size = int(img_width * 0.12)
         
         generated_files = {}
         success_count = 0
