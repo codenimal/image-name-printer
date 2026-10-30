@@ -83,7 +83,7 @@ if st.button("Generate Images"):
         
         line_start_x, line_end_x, line_y = detect_certificate_underline(base_image)
         available_width = line_end_x - line_start_x
-        max_font_size = int(img_width * 0.12)
+        max_font_size = int(img_width * 0.05)
         
         generated_files = {}
         success_count = 0
@@ -108,14 +108,14 @@ if st.button("Generate Images"):
             
             if is_default_font:
                 text_width = imagedraw.textlength(name, font=font)
-                target_y = line_y - 15
+                target_y = line_y - 25
             else:
                 text_width = imagedraw.textlength(name, font=font)
                 while text_width > (available_width * 0.95) and current_font_size > 12:
                     current_font_size -= 2
                     font = get_system_font(font_size=current_font_size)
                     text_width = imagedraw.textlength(name, font=font)
-                target_y = line_y - int(current_font_size * 0.95)
+                target_y = line_y - int(current_font_size * 1.15)
                 
             target_x = line_start_x + (available_width - text_width) / 2
             imagedraw.text((target_x, target_y), name, fill=(17, 30, 56), font=font)
