@@ -16,7 +16,7 @@ uploaded_excel = st.file_uploader("Upload Excel File", type=["xlsx"])
 uploaded_image = st.file_uploader("Upload Image Template", type=["png", "jpg", "jpeg"])
 
 
-def get_system_font(font_size=14):
+def get_system_font(font_size=35):
     font_paths = [
         "times.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
@@ -81,7 +81,7 @@ if st.button("Generate Images"):
         available_width = line_end_x - line_start_x
         
         
-        max_font_size = 14
+        max_font_size = 35
         
         generated_files = {}
         success_count = 0
