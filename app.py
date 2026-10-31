@@ -2,6 +2,7 @@ import io
 import os
 import zipfile
 import openpyxl
+import requests
 from PIL import Image, ImageDraw, ImageFont
 import streamlit as st
 import warnings
@@ -15,12 +16,31 @@ club_selection = st.selectbox(
 uploaded_excel = st.file_uploader("Upload Excel File", type=["xlsx"])
 uploaded_image = st.file_uploader("Upload Image Template", type=["png", "jpg", "jpeg"])
 
+@st.cache_data
+def download_font():
+    """Downloads a free Times New Roman alternative (Liberation Serif) from GitHub."""
+    font_url = "https://githubusercontent.com"
+    try:
+        response = requests.get(font_url)
+        response.raise_for_status()
+        return io.BytesIO(response.content)
+    except Exception:
+        return None
 
 def get_system_font(font_size=20):
+    # Try downloading the web font first
+    font_bytes = download_font()
+    if font_bytes:
+        try:
+            font_bytes.seek(0)
+            return ImageFont.truetype(font_bytes, size=font_size)
+        except Exception:
+            pass
+            
+    # Fallback to standard Linux system paths if offline
     font_paths = [
-        r"C:\Windows\Fonts\times.ttf",  # Windows
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",  # Linux / Streamlit Cloud
-        "/usr/share/fonts/truetype/freefont/FreeSerif.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
     ]
     for path in font_paths:
         if os.path.exists(path):
@@ -28,6 +48,7 @@ def get_system_font(font_size=20):
                 return ImageFont.truetype(path, size=font_size)
             except Exception:
                 continue
+                
     return ImageFont.load_default()
 
 
@@ -79,7 +100,6 @@ if st.button("Generate Images"):
         line_start_x, line_end_x, line_y = detect_certificate_underline(base_image)
         available_width = line_end_x - line_start_x
         
-        # Max baseline font size based on image width
         max_font_size = int(img_width * 0.12)
         
         generated_files = {}
@@ -98,18 +118,15 @@ if st.button("Generate Images"):
             imageopen = base_image.copy()
             imagedraw = ImageDraw.Draw(imageopen)
             
-            # --- AUTO FONT SIZING LOGIC ---
             current_font_size = max_font_size
             font = get_system_font(font_size=current_font_size)
             text_width = imagedraw.textlength(name, font=font)
             
-            # Shrink font until the name fits within 95% of the line width
             while text_width > (available_width * 0.95) and current_font_size > 12:
                 current_font_size -= 2
                 font = get_system_font(font_size=current_font_size)
                 text_width = imagedraw.textlength(name, font=font)
             
-            # Recalculate Y position so text doesn't hit the line when it shrinks
             target_y = line_y - int(current_font_size * 0.95)
             target_x = line_start_x + (available_width - text_width) / 2
             
