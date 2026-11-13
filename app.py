@@ -14,6 +14,7 @@ uploaded_image = st.file_uploader("Upload Image Template", type=["png", "jpg", "
 
 def get_system_font(font_size=35):
     font_paths = [
+        "times.ttf",
         r"C:\Windows\Fonts\times.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
         "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
