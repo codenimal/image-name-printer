@@ -9,7 +9,7 @@ jobs:
   keep-alive:
     runs-on: ubuntu-latest
     steps:
-      - uses: gpenessot/streamlit-keep-alive@v1
+      - uses: gpenessot/streamlit-keep-alive@main
         with:
           app-urls: |
             https://codenimal.github.io/image-name-printer/
