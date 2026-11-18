@@ -12,4 +12,4 @@ jobs:
       - uses: gpenessot/streamlit-keep-alive@v1
         with:
           app-urls: |
-            https://quickprint.streamlit.app/
+            https://codenimal.github.io/image-name-printer/
