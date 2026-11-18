@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Streamlit Sleep Simulation</title>
+</head>
+<body>
+  <h2>This app has gone to sleep due to inactivity.</h2>
+  <button id="wake-btn" onclick="wakeApp()">Yes, get this app back up!</button>
+  <p id="status">Status: Sleeping</p>
+
+  <script>
+    function wakeApp() {
+      document.getElementById("wake-btn").style.display = "none";
+      document.getElementById("status").innerText = "Status: Waking up! Button was clicked.";
+    }
+  </script>
+</body>
+</html>
