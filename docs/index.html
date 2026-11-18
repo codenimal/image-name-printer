@@ -2,17 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Streamlit Sleep Simulation</title>
+  <title>Streamlit</title>
 </head>
 <body>
-  <h2>This app has gone to sleep due to inactivity.</h2>
-  <button id="wake-btn" onclick="wakeApp()">Yes, get this app back up!</button>
-  <p id="status">Status: Sleeping</p>
+  <div id="sleep-screen">
+    <h1>Zzzz. This app has gone to sleep due to inactivity.</h1>
+    <p>Would you like to wake it back up?</p>
+    <button onclick="wakeApp()">Yes, get this app back up!</button>
+  </div>
+
+  <div id="live-app" style="display: none;">
+    <h1>Streamlit App is Awake!</h1>
+  </div>
 
   <script>
     function wakeApp() {
-      document.getElementById("wake-btn").style.display = "none";
-      document.getElementById("status").innerText = "Status: Waking up! Button was clicked.";
+      document.getElementById("sleep-screen").style.display = "none";
+      document.getElementById("live-app").style.display = "block";
     }
   </script>
 </body>
